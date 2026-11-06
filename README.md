@@ -37,6 +37,25 @@ It will compile the kernel located in `linux-sources` using a [crossbuild docker
 
 It uses default kernel config (`make bcmrpi_defconfig`), as recommended by the [official documentation](https://www.raspberrypi.com/documentation/computers/linux_kernel.html#cross-compiling-the-kernel), with the addition of the SquashFS module (`CONFIG_SQUASHFS`, which is required for gokrazy) and `CONFIG_IPV6`.
 
+Modules are disabled (`mod2noconfig`) because gokrazy does not autoload them, so the drivers below are built in:
+
+- WiFi (RTL8XXXU), Bluetooth, nftables, WireGuard, USB serial
+- I2C and SPI controllers, with `/dev/i2c-*` and `/dev/spidev*`
+- DRM with fbdev emulation and the ILI9341 SPI panel driver. The firmware framebuffer (HDMI/composite) stays `/dev/fb0`, so the panel is `/dev/fb1`.
+- FocalTech FT5x06/FT6x06 touchscreens (`/dev/input/event*`)
+
+The build fails if a required option is dropped by `olddefconfig` (see `requiredConfig` in `cmd/compile/main.go`).
+
+Device tree overlays are copied to `dist/overlays`, so they can be enabled with `BootloaderExtraLines` in the instance's `config.json`. For example, the Adafruit PiTFT 2.8" capacitive display:
+
+```json
+"BootloaderExtraLines": [
+  "dtparam=i2c_arm=on",
+  "dtparam=spi=on",
+  "dtoverlay=pitft28-capacitive,drm,rotate=270,touch-swapxy,touch-invx"
+]
+```
+
 
 > [!TIP]
 > If you want to use your locally-compiled kernel, use the [replace directive](https://gokrazy.org/development/modules/#building-local-code-the-replace-directive). To prevent gokrazy from [complaining about `CheckDir(...): ... malformed file path`](https://github.com/gokrazy/tools/issues/72), add an empty `go.mod` file in the `linux-sources` folder.

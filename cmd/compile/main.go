@@ -159,12 +159,28 @@ func run() error {
 		"--enable", "SPI_SPIDEV", // provides /dev/spidev*.* for userspace
 		"--enable", "SPI_BCM2835", // main SPI0 controller (Pi 0–4)
 		"--enable", "SPI_BCM2835AUX", // auxiliary SPI1/SPI2 (Pi 0–4)
+
+		// Display: SPI TFT panels such as the Adafruit PiTFT 2.8" (ILI9341)
+		"--enable", "DRM",
+		"--enable", "DRM_CLIENT_SELECTION",
+		"--enable", "DRM_FBDEV_EMULATION", // provides /dev/fbN
+		"--enable", "FB_DEVICE",
+		"--enable", "BACKLIGHT_CLASS_DEVICE",
+		"--enable", "TINYDRM_ILI9341",
+
+		// Touchscreen: FocalTech FT5x06/FT6x06 (e.g. FT6206 on the PiTFT 2.8" capacitive)
+		"--enable", "INPUT_EVDEV",
+		"--enable", "INPUT_TOUCHSCREEN",
+		"--enable", "TOUCHSCREEN_EDT_FT5X06",
 	}
 
 	if err := dockerRun(args...); err != nil {
 		return err
 	}
 	if err := dockerRun("make", "olddefconfig"); err != nil {
+		return err
+	}
+	if err := checkConfig(filepath.Join(kernelFolder, ".config"), requiredConfig); err != nil {
 		return err
 	}
 
@@ -226,6 +242,26 @@ func run() error {
 		}
 	}
 
+	// copy device tree overlays
+	overlaysSrc := filepath.Join(bootFolder, "dts", "overlays")
+	overlaysDst := filepath.Join(dstFolder, "overlays")
+	overlays, err := filepath.Glob(filepath.Join(overlaysSrc, "*.dtbo"))
+	if err != nil {
+		return err
+	}
+	if len(overlays) == 0 {
+		return fmt.Errorf("no overlays found in %s", overlaysSrc)
+	}
+	overlays = append(overlays, filepath.Join(overlaysSrc, "overlay_map.dtb"))
+	if err = os.MkdirAll(overlaysDst, 0755); err != nil {
+		return err
+	}
+	for _, file := range overlays {
+		if err = sh.Copy(filepath.Join(overlaysDst, filepath.Base(file)), file); err != nil {
+			return err
+		}
+	}
+
 	if err = os.WriteFile(filepath.Join(dstFolder, "placeholder.go"), []byte(`package dist
 
 // empty package so we can use the go tool with this repository
@@ -233,5 +269,40 @@ func run() error {
 		return err
 	}
 
+	return nil
+}
+
+// requiredConfig lists options that must be built in. olddefconfig silently
+// drops options whose dependencies are not met.
+var requiredConfig = []string{
+	"SQUASHFS",
+	"DRM_FBDEV_EMULATION",
+	"TINYDRM_ILI9341",
+	"TOUCHSCREEN_EDT_FT5X06",
+}
+
+func checkConfig(path string, required []string) error {
+	cfg, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	lines := strings.Split(string(cfg), "\n")
+	var missing []string
+	for _, name := range required {
+		want := "CONFIG_" + name + "=y"
+		found := false
+		for _, line := range lines {
+			if line == want {
+				found = true
+				break
+			}
+		}
+		if !found {
+			missing = append(missing, want)
+		}
+	}
+	if len(missing) > 0 {
+		return fmt.Errorf("kernel config is missing: %s", strings.Join(missing, ", "))
+	}
 	return nil
 }
