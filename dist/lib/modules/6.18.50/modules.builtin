@@ -38,14 +38,20 @@ kernel/crypto/dh_generic.ko
 kernel/crypto/rsa_generic.ko
 kernel/crypto/crypto_acompress.ko
 kernel/crypto/cryptomgr.ko
+kernel/crypto/cmac.ko
 kernel/crypto/hmac.ko
 kernel/crypto/sha256.ko
 kernel/crypto/ecb.ko
 kernel/crypto/cbc.ko
+kernel/crypto/ctr.ko
+kernel/crypto/gcm.ko
+kernel/crypto/ccm.ko
 kernel/crypto/des_generic.ko
+kernel/crypto/aes_generic.ko
 kernel/crypto/lzo.ko
 kernel/crypto/lzo-rle.ko
 kernel/crypto/rng.ko
+kernel/crypto/ghash-generic.ko
 kernel/crypto/asymmetric_keys/public_key.ko
 kernel/crypto/asymmetric_keys/x509_key_parser.ko
 kernel/crypto/asymmetric_keys/pkcs7_message.ko
@@ -60,6 +66,9 @@ kernel/lib/crc/crc-t10dif.ko
 kernel/lib/crc/crc32.ko
 kernel/lib/crc/crc64.ko
 kernel/lib/crypto/libcryptoutils.ko
+kernel/lib/crypto/libaes.ko
+kernel/lib/crypto/libarc4.ko
+kernel/lib/crypto/gf128mul.ko
 kernel/lib/crypto/libchacha.ko
 kernel/lib/crypto/libchacha20poly1305.ko
 kernel/lib/crypto/libcurve25519.ko
@@ -142,6 +151,9 @@ kernel/drivers/scsi/scsi_mod.ko
 kernel/drivers/scsi/scsi_common.ko
 kernel/drivers/scsi/scsi_transport_iscsi.ko
 kernel/drivers/scsi/sd_mod.ko
+kernel/drivers/spi/spidev.ko
+kernel/drivers/spi/spi-bcm2835.ko
+kernel/drivers/spi/spi-bcm2835aux.ko
 kernel/drivers/net/wireguard/wireguard.ko
 kernel/drivers/net/mii.ko
 kernel/drivers/net/netkit.ko
@@ -154,6 +166,7 @@ kernel/drivers/net/mdio/fwnode_mdio.ko
 kernel/drivers/net/mdio/of_mdio.ko
 kernel/drivers/net/tun.ko
 kernel/drivers/net/nlmon.ko
+kernel/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.ko
 kernel/drivers/net/usb/smsc95xx.ko
 kernel/drivers/net/usb/usbnet.ko
 kernel/drivers/usb/common/usb-common.ko
@@ -173,6 +186,10 @@ kernel/drivers/input/input-leds.ko
 kernel/drivers/input/mousedev.ko
 kernel/drivers/input/evdev.ko
 kernel/drivers/i2c/i2c-core.ko
+kernel/drivers/i2c/i2c-dev.ko
+kernel/drivers/i2c/i2c-mux.ko
+kernel/drivers/i2c/busses/i2c-bcm2835.ko
+kernel/drivers/i2c/muxes/i2c-mux-pinctrl.ko
 kernel/drivers/media/rc/keymaps/rc-adstech-dvb-t-pci.ko
 kernel/drivers/media/rc/keymaps/rc-alink-dtu-m.ko
 kernel/drivers/media/rc/keymaps/rc-anysee.ko
@@ -369,5 +386,6 @@ kernel/net/sunrpc/sunrpc.ko
 kernel/net/sunrpc/auth_gss/auth_rpcgss.ko
 kernel/net/sunrpc/auth_gss/rpcsec_gss_krb5.ko
 kernel/net/wireless/cfg80211.ko
+kernel/net/mac80211/mac80211.ko
 kernel/net/rfkill/rfkill.ko
 kernel/net/dns_resolver/dns_resolver.ko

@@ -10,7 +10,6 @@ alias symbol:crypto_ecdh_decode_key ecdh_generic
 alias symbol:hci_recv_frame bluetooth
 alias symbol:hmac_sha512 libsha512
 alias symbol:l2cap_chan_put bluetooth
-alias symbol:crypto_aes_sbox libaes
 alias symbol:hmac_sha384_init_usingrawkey libsha512
 alias symbol:bt_procfs_cleanup bluetooth
 alias symbol:ecc_get_curve25519 ecc
@@ -34,7 +33,6 @@ alias symbol:sha384_init libsha512
 alias symbol:l2cap_conn_put bluetooth
 alias symbol:bt_sock_ioctl bluetooth
 alias symbol:hci_unregister_cb bluetooth
-alias symbol:aes_expandkey libaes
 alias symbol:btbcm_finalize btbcm
 alias symbol:bt_sock_reclassify_lock bluetooth
 alias symbol:brcmu_pktq_pdeq_match brcmutil
@@ -61,7 +59,6 @@ alias symbol:brcmu_dotrev_str brcmutil
 alias symbol:hmac_sha384_final libsha512
 alias symbol:l2cap_add_psm bluetooth
 alias symbol:ecc_free_point ecc
-alias symbol:aes_decrypt libaes
 alias symbol:h4_recv_buf hci_uart
 alias symbol:brcmu_pktq_penq_head brcmutil
 alias symbol:hci_cmd_sync_lookup_entry bluetooth
@@ -112,7 +109,6 @@ alias symbol:bt_err bluetooth
 alias symbol:bt_procfs_init bluetooth
 alias symbol:bt_sock_register bluetooth
 alias symbol:__hci_cmd_sync_status_sk bluetooth
-alias symbol:aes_encrypt libaes
 alias symbol:hci_get_route bluetooth
 alias symbol:brcmf_set_wsec brcmfmac
 alias symbol:btbcm_write_pcm_int_params btbcm
@@ -173,7 +169,6 @@ alias symbol:hci_register_cb bluetooth
 alias symbol:hci_suspend_dev bluetooth
 alias symbol:hci_conn_security bluetooth
 alias symbol:hmac_sha512_usingrawkey libsha512
-alias symbol:crypto_aes_inv_sbox libaes
 alias symbol:vli_num_bits ecc
 alias symbol:hci_reset_dev bluetooth
 alias symbol:hci_cmd_sync_submit bluetooth

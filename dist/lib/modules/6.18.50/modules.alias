@@ -1,6 +1,4 @@
 # Aliases extracted from modules themselves.
-alias crypto-cmac cmac
-alias cmac cmac
 alias crypto-hmac-sha512-lib sha512
 alias hmac-sha512-lib sha512
 alias crypto-hmac(sha512) sha512

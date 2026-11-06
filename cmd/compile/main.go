@@ -133,12 +133,32 @@ func run() error {
 		"--enable", "USB_SERIAL_FTDI_SIO",
 		"--enable", "USB_SERIAL_CP210X",
 		"--enable", "USB_ACM",
-		"--enable", "USB_PRINTER", //printer support /dev/usb/lp0
+		"--enable", "USB_PRINTER", // printer support /dev/usb/lp0
 
 		"--enable", "USB_SERIAL_GENERIC",
 		"--module", "USB_SERIAL_CH341",
 		"--module", "USB_SERIAL_PL2303",
 		"--module", "USB_SERIAL_SAFE",
+
+		// WiFi
+		"--enable", "RTL8XXXU",
+		"--enable", "RTL8XXXU_UNTESTED",
+		"--enable", "CFG80211",
+		"--enable", "MAC80211",
+
+		// I2C
+		"--enable", "I2C",
+		"--enable", "I2C_CHARDEV", // provides /dev/i2c-* for userspace
+		"--enable", "I2C_BCM2835", // I2C controller on Pi Zero/1/2/3/4
+		"--enable", "I2C_MUX",
+		"--enable", "I2C_MUX_PINCTRL", // used by the i2c0 mux on some boards
+
+		// SPI
+		"--enable", "SPI",
+		"--enable", "SPI_MASTER",
+		"--enable", "SPI_SPIDEV", // provides /dev/spidev*.* for userspace
+		"--enable", "SPI_BCM2835", // main SPI0 controller (Pi 0–4)
+		"--enable", "SPI_BCM2835AUX", // auxiliary SPI1/SPI2 (Pi 0–4)
 	}
 
 	if err := dockerRun(args...); err != nil {

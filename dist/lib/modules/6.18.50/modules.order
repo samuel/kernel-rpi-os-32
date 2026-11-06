@@ -1,11 +1,9 @@
-kernel/crypto/cmac.ko
 kernel/crypto/sha512.ko
 kernel/crypto/sha3_generic.ko
 kernel/crypto/drbg.ko
 kernel/crypto/jitterentropy_rng.ko
 kernel/crypto/ecc.ko
 kernel/crypto/ecdh_generic.ko
-kernel/lib/crypto/libaes.ko
 kernel/lib/crypto/libsha512.ko
 kernel/drivers/net/wireless/broadcom/brcm80211/brcmutil/brcmutil.ko
 kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
